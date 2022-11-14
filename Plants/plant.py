@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class Plant(ABC):
     
-    def __init__(self, health, position, path = '') -> None:
+    def __init__(self, health, position) -> None:
         super().__init__()
         self._health = health
         self._life_state = True
