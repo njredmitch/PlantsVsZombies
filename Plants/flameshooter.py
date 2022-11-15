@@ -17,3 +17,6 @@ class Flameshooter(Peashooter, pygame.sprite.Sprite):
 
     def shoot():
         pass
+
+    def draw(self):
+        pass
