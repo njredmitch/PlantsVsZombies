@@ -3,12 +3,13 @@ from plant import Plant
 import schedule
 
 class Sunflower(Plant, pygame.sprite.Sprite):
-    path = 'PlantsVsZombies\GamePNGS\Sunflower.png'
+    image_path = 'PlantsVsZombies\GamePNGS\Sunflower.png'
     cost = 50
     sun_container = []
     
     def __init__(self, position) -> None:
-        super().__init__(200, position)
+        Plant.__init__(200, position)
+        pygame.sprite.Sprite.__init__()
         self._event_scheduler = schedule
         self._event_scheduler.every(20).seconds().do(self.produce_sun())
         self._surf = pygame.image.load(Sunflower.path).convert_alpha()
