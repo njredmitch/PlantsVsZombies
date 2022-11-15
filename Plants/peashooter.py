@@ -10,10 +10,21 @@ class Peashooter(Plant, ABC):
     def __init__(self, position) -> None:
         super().__init__(200, position)
         self._event_manager = schedule
-        self._event_manager.every(10).second.do(self.shoot())
+        self._shoot_state = False
+        
+    def set_shoot_state(self, state):
+        self._shoot_state = state
     
+    def get_shoot_state(self):
+        return self._shoot_state
+    
+    def shoot_peas(self):
+        self._event_manager.every(20).seconds.do(self.shoot())
+
     @abstractmethod
     def shoot(self):
         pass
+
+    
     
     
