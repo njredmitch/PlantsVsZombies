@@ -15,7 +15,7 @@ class Sunflower(Plant, pygame.sprite.Sprite):
         self._rect = pygame.rect(self.surf, self._position)
 
     def produce_sun(self):
-        pass
+        print('making sun')
     
     def draw(self, screen: pygame.display):
         screen.blitz(self.rect)
