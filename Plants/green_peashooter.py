@@ -12,7 +12,7 @@ class GreenPeashooter(Peashooter, pygame.sprite.Sprite):
         self.rect = self.image.get_rect(self._position)
 
     @staticmethod
-    def get_cost(self):
+    def get_cost():
         return GreenPeashooter._cost
 
     def shoot():
