@@ -44,4 +44,6 @@ class Zombie(ABC):
     def set_slowed_status(self, status):
         self._slowed_status = status
     
-    
+    @abstractmethod
+    def draw(self, display):
+        pass
