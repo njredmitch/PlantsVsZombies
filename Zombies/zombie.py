@@ -29,10 +29,10 @@ class Zombie(ABC):
     def get_life_state(self):
         return self._life_state
     
-    def set_xpos(self, xpos):
+    def update_xpos(self, xpos):
         self._position[0] = xpos
     
-    def set_ypos(self, ypos):
+    def update_ypos(self, ypos):
         self._position[1] = ypos
     
     def set_life_state(self, state):
