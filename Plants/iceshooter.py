@@ -6,8 +6,8 @@ class Iceshooter(Peashooter, pygame.sprite.Sprite):
     COST = 175
 
     def __init__(self, position) -> None:
-        Peashooter.__init__(position)
-        pygame.sprite.Sprite.__init__()
+        Peashooter.__init__(self, position)
+        pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(Iceshooter.image_path)
         self.rect = self.image.get_rect(self._position)
         
