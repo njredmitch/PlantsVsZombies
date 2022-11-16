@@ -4,7 +4,7 @@ import schedule
 
 class Sunflower(Plant, pygame.sprite.Sprite):
     image_path = 'PlantsVsZombies\GamePNGS\Sunflower.png'
-    cost = 50
+    COST = 50
     sun_container = []
     
     def __init__(self, position) -> None:
