@@ -8,18 +8,14 @@ class Sunflower(Plant, pygame.sprite.Sprite):
     sun_container = []
     
     def __init__(self, position) -> None:
-        Plant.__init__(self, 200, position)
+        Plant.__init__(self, 200, position, self.image_path)
         pygame.sprite.Sprite.__init__(self)
         self._event_scheduler = schedule
         self._event_scheduler.every(20).seconds.do(self.produce_sun())
-        self._surf = pygame.image.load(Sunflower.image_path)
-        self._rect = self.image.get_rect(self._position)
 
     def produce_sun(self):
         print('making sun')
     
-    def draw(self, screen: pygame.display):
-        screen.blitz(self.rect)
     
 
 
