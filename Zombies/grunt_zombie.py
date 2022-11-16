@@ -29,3 +29,7 @@ class GruntZombie(Zombie, pygame.sprite.Sprite):
     
     def update_plant(self):
         self._plant_to_attack = None
+    
+    def stop_attacking(self):
+        self._event_schedule.clear()
+    
