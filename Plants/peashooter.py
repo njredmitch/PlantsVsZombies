@@ -1,4 +1,3 @@
-import pygame
 import schedule
 
 from abc import ABC, abstractmethod
@@ -7,8 +6,8 @@ from plant import Plant
 class Peashooter(Plant, ABC):
     peas = {}
 
-    def __init__(self, position) -> None:
-        super().__init__(200, position)
+    def __init__(self, position, path) -> None:
+        super().__init__(200, position, path)
         self._event_manager = schedule
     
     def shoot_peas(self):

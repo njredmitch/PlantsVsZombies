@@ -1,15 +1,25 @@
 from abc import ABC, abstractmethod
+import pygame
 
-class Plant(ABC):
+class Plant(ABC, pygame.sprite.Sprite):
     
-    def __init__(self, health, position) -> None:
-        super().__init__()
+    def __init__(self, health, position, path) -> None:
+        ABC.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
         self._health = health
         self._life_state = True
         self._position = position
+        self._image = pygame.image.load(path)
+        self._rect = self.image.get_rect(topleft = self._position)
     
     def lose_health(self, dmg):
         self.set_health(self._health - dmg)
+    
+    def convert_image(self):
+        self.image.convert_alpha()
+
+    def draw(self, display: pygame.display):
+        display.blit(self._rect)
     
     def set_health(self, health):
         self._health = health
@@ -29,9 +39,6 @@ class Plant(ABC):
     def get_position(self):
         return self._position
     
-    @abstractmethod
-    def draw(self):
-        pass
 
     
     
