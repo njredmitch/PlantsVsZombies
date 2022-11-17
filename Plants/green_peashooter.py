@@ -1,4 +1,5 @@
 from peashooter import Peashooter
+from Projectiles.green_pea import GreenPea
 
 class GreenPeashooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Peashooter.png'
@@ -14,4 +15,6 @@ class GreenPeashooter(Peashooter):
     def shoot():
         pass
 
+    def pos_to_pea_pos(self):
+        pass
         
