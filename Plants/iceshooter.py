@@ -1,4 +1,5 @@
 from peashooter import Peashooter
+from Projectiles.ice_pea import IcePea
 
 class Iceshooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Icehooter.png'
@@ -12,4 +13,7 @@ class Iceshooter(Peashooter):
         return Iceshooter.COST
     
     def shoot():
+        pass
+
+    def pos_to_pea_pos(self):
         pass
