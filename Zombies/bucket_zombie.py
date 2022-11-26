@@ -1,6 +1,6 @@
 from zombie import Zombie
 
-class BucketZombie(Zombie, pygame.sprite.Sprite):
+class BucketZombie(Zombie):
     image_path = 'PlantsVsZombies\GamePNGS\Buckethead.png'
 
     def __init__(self, position) -> None:
