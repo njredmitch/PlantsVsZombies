@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from plant import Plant
 
 class Peashooter(Plant, ABC):
-    peas = {}
+    peas = [[]]*5
 
     def __init__(self, position, path) -> None:
         super().__init__(200, position, path)
