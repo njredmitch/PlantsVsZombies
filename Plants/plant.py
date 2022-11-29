@@ -9,8 +9,8 @@ class Plant(ABC, pygame.sprite.Sprite):
         self._health = health
         self._life_state = True
         self._position = position
-        self._image = pygame.image.load(path)
-        self._rect = self.image.get_rect(topleft = self._position)
+        self.image = pygame.image.load(path)
+        self.rect = self.image.get_rect(topleft = self._position)
     
     def lose_health(self, dmg):
         self.set_health(self._health - dmg)

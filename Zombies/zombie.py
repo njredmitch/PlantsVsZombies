@@ -15,8 +15,8 @@ class Zombie(ABC, pygame.sprite.Sprite):
         self._movement_status = True
         self._event_schedule = schedule
         self._plant_to_attack = None
-        self._image = pygame.image.load(path)
-        self._rect = self.image.get_rect(midbottom = self._position)
+        self.image = pygame.image.load(path)
+        self.rect = self.image.get_rect(midbottom = self._position)
         
     def lose_health(self, dmg):
         self._health -= dmg
