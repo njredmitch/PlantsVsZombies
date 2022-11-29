@@ -1,11 +1,16 @@
 from abc import ABC, abstractmethod
+import pygame
+from pygame.sprite import Sprite
 
-class Projectile(ABC):
+class Projectile(ABC, Sprite):
 
-    def __init__(self, position, dmg) -> None:
-        super().__init__()
+    def __init__(self, position, dmg, path) -> None:
+        ABC.__init__(self)
+        Sprite.__init__(self)
         self._dmg = dmg
         self._position = position
+        self.image = pygame.image.load(path)
+        self.rect = self.image.get_rect()
     
     def update_xpos(self):
         self._position[0] += 1
@@ -16,6 +21,8 @@ class Projectile(ABC):
     def get_dmg(self):
         return self._dmg
     
-    @abstractmethod
-    def draw(self, display):
-        pass
+    def draw(self, display: pygame.display):
+        display.blitz(self.rect) 
+    
+    def convert_image(self):
+        self.image.convert_alpha()
