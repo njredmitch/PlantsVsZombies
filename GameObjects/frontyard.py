@@ -94,11 +94,11 @@ class FrontYard:
     
     def initialize_shop(self):
         self._shop_group = pygame.sprite.Group
-        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Sunflower_Shop.png', (0, 100), 50))
-        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Walnut_Shop.png', (0, 160), 50))
-        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Peashooter_Shop.png', (0, 220), 100))
-        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Iceshooter_Shop.png', (0, 280), 175))
-        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Flameshooter_Shop.png', (0, 340), 200))
+        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Sunflower_Shop.png', (0, 100), 50, 'SF'))
+        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Walnut_Shop.png', (0, 160), 50, 'W'))
+        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Peashooter_Shop.png', (0, 220), 100, 'GP'))
+        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Iceshooter_Shop.png', (0, 280), 175, 'IP'))
+        self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Flameshooter_Shop.png', (0, 340), 200, 'FP'))
         
 
     def get_plants(self):
