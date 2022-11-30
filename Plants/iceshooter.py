@@ -3,17 +3,12 @@ from Projectiles.ice_pea import IcePea
 
 class Iceshooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Icehooter.png'
-    COST = 175
 
     def __init__(self, position) -> None:
         Peashooter.__init__(self, position, self.image_path)
-        
-    @staticmethod
-    def get_cost():
-        return Iceshooter.COST
     
-    def shoot():
-        pass
+    def shoot(self):
+        self.peas.add(IcePea(self.make_pea_pos()))
 
-    def pos_to_pea_pos(self):
-        pass
+    def make_pea_pos(self):
+        return (self._position[0] + 50, self._position[1] + 30)

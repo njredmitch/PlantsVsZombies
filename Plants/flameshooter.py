@@ -3,7 +3,6 @@ from Projectiles.flame_pea import FlamePea
 
 class Flameshooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Flameshooter.png'
-    COST = 200
 
     def __init__(self, position) -> None:
         Peashooter.__init__(self, position, self.image_path)
@@ -13,7 +12,7 @@ class Flameshooter(Peashooter):
         return Flameshooter.COST
 
     def shoot(self):
-        pass
+        self.peas.add(FlamePea(self.make_pea_pos()))
 
-    def pos_to_pea_pos(self):
-        pass
+    def make_pea_pos(self):
+        return (self._position[0] + 60, self._position[1] + 30)

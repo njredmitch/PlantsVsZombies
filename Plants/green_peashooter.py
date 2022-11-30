@@ -3,7 +3,7 @@ from Projectiles.green_pea import GreenPea
 
 class GreenPeashooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Peashooter.png'
-    COST = 100
+
 
     def __init__(self, position) -> None:
         Peashooter.__init__(self, position, self.image_path)
@@ -12,9 +12,10 @@ class GreenPeashooter(Peashooter):
     def get_cost():
         return GreenPeashooter.COST
 
-    def shoot():
-        pass
+    def shoot(self):
+        self.peas.add(GreenPea(self.make_pea_pos()))
 
-    def pos_to_pea_pos(self):
-        pass
+
+    def meke_pea_pos(self):
+        return (self._position[0] + 45, self._position[1] + 30)
         
