@@ -10,7 +10,7 @@ class Projectile(ABC, Sprite):
         self._dmg = dmg
         self._position = position
         self.image = pygame.image.load(path)
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(midleft = self._position)
     
     def update_xpos(self):
         self._position[0] += 1
