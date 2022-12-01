@@ -25,6 +25,7 @@ class Zombie(ABC, pygame.sprite.Sprite):
         display.blitz()
 
     def attack(self, plant):
+        self._movement_status = False
         self.plant_to_attack = plant
         self._event_schedule.every(5).seconds.do(self.attack_plant())
 
@@ -34,11 +35,13 @@ class Zombie(ABC, pygame.sprite.Sprite):
     def convert_image(self):
         self.image.convert_alpha()
     
-    def update_plant(self):
-        self.plant_to_attack = None
-    
     def stop_attacking(self):
+        self._plant_to_attack = None
+        self._movement_status = True
         self._event_schedule.clear()
+    
+    def get_plant(self):
+        return self._plant_to_attack
 
     def get_health(self):
         return self._health
@@ -54,6 +57,9 @@ class Zombie(ABC, pygame.sprite.Sprite):
     
     def get_life_state(self):
         return self._life_state
+    
+    def get_position(self):
+        return self._position
     
     def update_xpos(self, xpos):
         self._position[0] = xpos
