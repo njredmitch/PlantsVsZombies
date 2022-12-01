@@ -28,7 +28,8 @@ class FrontYard:
         super().__init__()
         self._zombies = [[] ] * 5
         self._peashooters = [[]] * 5
-        self._game_sqaures = self.initialize_game_squares()
+        self._game_sqaure = self.initialize_game_sqaures()
+        self._game_sqaures_group = self.initialize_game_squares_group()
         self._plants_group = pygame.sprite.Group
         self._zombie_group = pygame.sprite.Group
         self._projectile_group = PS.peas
@@ -38,7 +39,7 @@ class FrontYard:
         
 
         
-    def initialize_game_squares(self):
+    def initialize_game_squares_group(self):
         self._game_sqaures = [GameSquare(85, 145, 335, 240),
                               GameSquare(85, 145, 425, 240),
                               GameSquare(95, 145, 520, 240),
@@ -84,6 +85,13 @@ class FrontYard:
                               GameSquare(85, 145, 885, 760),
                               GameSquare(85, 145, 975, 760),
                               GameSquare(105, 145, 1065, 760)]
+    
+    def initialize_game_sqaures(self):
+        yard = {}
+        for g in self._game_sqaures_group():
+            yard[g]= None
+        
+        return yard
 
     def initialize_sqaure_group(self):
         t = pygame.sprite.Group
@@ -100,6 +108,42 @@ class FrontYard:
         self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Iceshooter_Shop.png', (0, 280), 175, 'IP'))
         self._shop_group.add(PlantShop('PlantsVsZombies\GamePNGS\Flameshooter_Shop.png', (0, 340), 200, 'FP'))
         
+    def add_plant(self, plant):
+        if isinstance(plant, PS):
+            self._plants_group.add(plant)
+            self._peashooters[self.get_peashooter_index(plant)].append(plant)
+        else:
+            self._plants_group.add(plant)
+    
+    def add_zombie(self, z : Zombie):
+        self._zombies[self.get_zombie_index(z)].append(z)
+        self._zombie_group.add(z)
+
+    def add_sun(self, s : Sun):
+        self._sun_group.add(s)
+
+    def remove_plant(self, plant : Plant):
+        if isinstance(plant, PS):
+            self._peashooters[self.get_peashooter_index(plant)].pop(plant)
+            self._plants_group.remove(plant)
+        else:
+            self._plants_group.remove(plant)
+    
+    def remove_zombie(self, z : Zombie):
+        self._zombies[self.get_zombie_index(z)].pop(z)
+        self._zombie_group.remove(z)
+    
+    def remove_projectile(self, p):
+        self._projectile_group.remove(p)
+    
+    def remove_sun(self, s):
+        self._sun_group.remove(s)
+
+    def get_peashooter_index(self, ps : Plant):
+        return ps.get_position()[1]//150
+    
+    def get_zombie_index(self, z : Zombie):
+        return z.get_position()[1]//150
 
     def get_plants(self):
         return self._plants_group
@@ -119,11 +163,15 @@ class FrontYard:
     def get_sun(self):
         return self._sun_group
     
-    def get_game_sqaures(self):
+    def get_game_squares(self):
+        return self._game_sqaures
+
+    def get_game_sqaures_group(self):
         return self._game_sqaures
     
     def get_groups(self):
         return [self._plants_group, self._zombie_group, self._projectile_group, self._sun_group, self._square_group, self._shop_group]
+    
     
     
 
@@ -131,10 +179,12 @@ class GameSquare(pygame.sprite.Sprite):
 
     def __init__(self, width, height, x, y) -> None:
         super().__init__()
+        self._pos = (x, y)
         self.image = pygame.Surface((width,height))
         self.image.set_alpha(0)
-        self.rect = self.image.get_rect(midbottom=(x, y))
+        self.rect = self.image.get_rect(midbottom=self._pos)
     
-    def get_graphics(self):
-        return (self._surf, self._rect)
+    def get_pos(self):
+        return self._pos
+    
     
