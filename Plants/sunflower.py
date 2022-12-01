@@ -1,11 +1,13 @@
 import pygame
-from plant import Plant
 import schedule
+
+from plant import Plant
+from GameObjects.sun import Sun
+
 
 class Sunflower(Plant, pygame.sprite.Sprite):
     image_path = 'PlantsVsZombies\GamePNGS\Sunflower.png'
-    COST = 50
-    sun_container = []
+    sun_group = pygame.sprite.Group
     
     def __init__(self, position) -> None:
         Plant.__init__(self, 200, position, self.image_path)
@@ -13,8 +15,9 @@ class Sunflower(Plant, pygame.sprite.Sprite):
         self._event_scheduler = schedule
         self._event_scheduler.every(20).seconds.do(self.produce_sun())
 
+    
     def produce_sun(self):
-        print('making sun')
+        Sunflower.sun_group.add(Sun)
     
     
 
