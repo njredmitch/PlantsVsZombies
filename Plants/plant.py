@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 import pygame
 
 class Plant(ABC, pygame.sprite.Sprite):
@@ -26,7 +26,7 @@ class Plant(ABC, pygame.sprite.Sprite):
     
     def set_life_state(self, state):
         self._life_state = state
-    
+
     def set_position(self, position):
         self._position = position
     
