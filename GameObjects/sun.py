@@ -1,4 +1,5 @@
 import pygame
+import random
 
 class Sun(pygame.sprite.Sprite):
     image_path = 'PlantsVsZombies\GamePNGS\Sun.png'
@@ -14,4 +15,18 @@ class Sun(pygame.sprite.Sprite):
     
     def update_ypos(self):
         self._pos[1] += 1
+    
+    def is_clicked(self, pos):
+        return self._rect.collidepoint(pos)
+    
+    def set_pos(self, pos):
+        if 0 <= random.random < 0.25:
+            self._pos = (pos[0] + 20, pos[1] + 90)
+        elif 0.25 <= random.random < 0.5:
+            self._pos = (pos[0] + 20, pos[1])
+        elif 0.25 <= random.random < 0.5:
+            self._pos = (pos[0] - 20, pos[1])
+        else:
+           
+            self._pos = (pos[0] + 20, pos[1])
     
