@@ -13,7 +13,7 @@ class Peashooter(Plant, ABC):
         self._primed = False
     
     def shoot_peas(self):
-        self._event_manager.every(20).seconds.do(self.shoot())
+        self._event_manager.every(2).seconds.do(self.shoot())
         self._primed = True
 
     def stop_shooting(self):
