@@ -11,4 +11,4 @@ class Iceshooter(Peashooter):
         self.peas.add(IcePea(self.make_pea_pos()))
 
     def make_pea_pos(self):
-        return (self._position[0] + 50, self._position[1] + 30)
+        return (self._position[0] + 25, self._position[1] - 75)

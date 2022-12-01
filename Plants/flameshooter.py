@@ -15,4 +15,4 @@ class Flameshooter(Peashooter):
         self.peas.add(FlamePea(self.make_pea_pos()))
 
     def make_pea_pos(self):
-        return (self._position[0] + 60, self._position[1] + 30)
+        return (self._position[0] + 20, self._position[1] - 75)

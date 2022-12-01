@@ -17,5 +17,5 @@ class GreenPeashooter(Peashooter):
 
 
     def meke_pea_pos(self):
-        return (self._position[0] + 45, self._position[1] + 30)
+        return (self._position[0] + 30, self._position[1] - 75)
         
