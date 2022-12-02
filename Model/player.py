@@ -10,6 +10,7 @@ class Player:
     def __init__(self) -> None:
         self._sun = 50
         self._plant = None
+        self._final_status = None
 
     def store_plant(self, plant):
         self._plant = self.plant_to_store(plant)
@@ -33,6 +34,12 @@ class Player:
             self._plant = S(pos)
     def has_plant(self):
         return self._plant != None
+
+    def set_final_status(self, fin):
+        self._final_status = fin
+
+    def get_final_status(self):
+        return self._final_status
 
     def get_plant(self):
         return self._plant
