@@ -24,7 +24,7 @@ from Projectiles.green_pea import GreenPea as GP
 
 class FrontYard:
 
-    def __init__(self) -> None:
+    def __init__(self, group : pygame.sprite.Group) -> None:
         super().__init__()
         self._zombies = [[] ] * 5
         self._peashooters = [[]] * 5
@@ -36,6 +36,7 @@ class FrontYard:
         self._sun_group = pygame.sprite.Group()
         self._square_group = self.initialize_sqaure_group()
         self._shop_group = pygame.sprite.Group()
+        self._master_group = group
  
     def initialize_game_squares_group(self):
         return [GameSquare(85, 145, 335, 240),
@@ -134,19 +135,18 @@ class FrontYard:
     def remove_plant(self, plant : Plant):
         if isinstance(plant, PS):
             self._peashooters[self.get_peashooter_index(plant)].pop(plant)
-            self._plants_group.remove(plant)
-        else:
-            self._plants_group.remove(plant)
-    
+        
+        plant.kill()
+        
     def remove_zombie(self, z : Zombie):
         self._zombies[self.get_zombie_index(z)].pop(z)
-        self._zombie_group.remove(z)
+        z.kill()
     
     def remove_projectile(self, p : Projectile):
         self._projectile_group.remove(p)
     
     def remove_sun(self, s : Sun):
-        self._sun_group.remove(s)
+        s.kill()
 
     def get_peashooter_index(self, ps : PS):
         return ps.get_position()[1]//150
