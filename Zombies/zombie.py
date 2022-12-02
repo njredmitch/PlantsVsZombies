@@ -1,5 +1,4 @@
 from abc import ABC
-import schedule
 import pygame
 
 class Zombie(ABC, pygame.sprite.Sprite):
@@ -13,8 +12,6 @@ class Zombie(ABC, pygame.sprite.Sprite):
         self._life_state = True
         self._slowed_status = False
         self._movement_status = True
-        self._event_schedule = schedule
-        self._plant_to_attack = None
         self.image = pygame.image.load(path)
         self.rect = self.image.get_rect(midbottom = self._position)
         
@@ -24,24 +21,8 @@ class Zombie(ABC, pygame.sprite.Sprite):
     def draw(self, display: pygame.display):
         display.blitz()
 
-    def attack(self, plant):
-        self._movement_status = False
-        self.plant_to_attack = plant
-        self._event_schedule.every(5).seconds.do(self.attack_plant())
-
-    def attack_plant(self):
-        self.plant_to_attack.lose_health(self._attack_dmg)
-
     def convert_image(self):
         self.image.convert_alpha()
-    
-    def stop_attacking(self):
-        self._plant_to_attack = None
-        self._movement_status = True
-        self._event_schedule.clear()
-    
-    def get_plant(self):
-        return self._plant_to_attack
 
     def get_health(self):
         return self._health
