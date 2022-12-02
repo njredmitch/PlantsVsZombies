@@ -9,18 +9,20 @@ class Peashooter(Plant, ABC):
 
     def __init__(self, position, path) -> None:
         super().__init__(200, position, path)
-        self._event_manager = schedule
+        self._event_manager = schedule.default_scheduler
+        self._event_manager.every(2).seconds.do(self.shoot())
         self._primed = False
     
     def shoot_peas(self):
-        self._event_manager.every(2).seconds.do(self.shoot())
+        self._event_manager.run_pending()
+
+    def prime(self):
         self._primed = True
 
-    def stop_shooting(self):
-        self._event_manager.clear()
+    def unprime(self):
         self._primed = False
 
-    def get_primed(self):
+    def is_primed(self):
         return self._primed
     
     @abstractmethod
