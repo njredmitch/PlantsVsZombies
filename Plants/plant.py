@@ -17,9 +17,6 @@ class Plant(ABC, pygame.sprite.Sprite):
     
     def convert_image(self):
         self.image.convert_alpha()
-
-    def draw(self, display: pygame.display):
-        display.blit(self._rect)
     
     def set_health(self, health):
         self._health = health

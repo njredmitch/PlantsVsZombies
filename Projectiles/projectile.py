@@ -21,8 +21,5 @@ class Projectile(ABC, Sprite):
     def get_dmg(self):
         return self._dmg
     
-    def draw(self, display: pygame.display):
-        display.blitz(self.rect) 
-    
     def convert_image(self):
         self.image.convert_alpha()

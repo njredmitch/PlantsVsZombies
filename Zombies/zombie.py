@@ -18,9 +18,6 @@ class Zombie(ABC, pygame.sprite.Sprite):
     def lose_health(self, dmg):
         self._health -= dmg
 
-    def draw(self, display: pygame.display):
-        display.blitz()
-
     def convert_image(self):
         self.image.convert_alpha()
 
