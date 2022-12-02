@@ -10,9 +10,6 @@ class Player:
     def __init__(self) -> None:
         self._sun = 50
         self._plant = None
-        self._zombies_killed = 0
-        
-
 
     def store_plant(self, plant):
         self._plant = self.plant_to_store(plant)
@@ -34,12 +31,8 @@ class Player:
             self._plant = W(pos)
         elif key == 'SF':
             self._plant = S(pos)
-    
-    def killed_zombie(self):
-        self._zombies_killed += 1
-    
-    def get_zombies_killed(self):
-        return self._zombies_killed
+    def has_plant(self):
+        return self._plant != None
 
     def get_plant(self):
         return self._plant
