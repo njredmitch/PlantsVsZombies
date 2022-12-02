@@ -29,4 +29,3 @@ class Sun(pygame.sprite.Sprite):
         else:
            
             self._pos = (pos[0] + 20, pos[1])
-    
