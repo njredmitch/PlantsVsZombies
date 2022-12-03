@@ -15,6 +15,3 @@ class PlantShop(Sprite):
     
     def get_plant(self):
         return self._plant
-    
-    
-    

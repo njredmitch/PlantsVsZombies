@@ -1,8 +1,10 @@
 from abc import ABC
 import pygame
 
+class PlantMeta(type(ABC), type(pygame.sprite.Sprite)): pass
+
 class Plant(ABC, pygame.sprite.Sprite):
-    
+    __metaclass__=PlantMeta
     def __init__(self, health, position, path) -> None:
         ABC.__init__(self)
         pygame.sprite.Sprite.__init__(self)
@@ -35,9 +37,3 @@ class Plant(ABC, pygame.sprite.Sprite):
     
     def get_position(self):
         return self._position
-    
-
-    
-    
-
-    

@@ -1,5 +1,5 @@
-from peashooter import Peashooter
-from Projectiles.ice_pea import IcePea
+from Model.Plants.peashooter import Peashooter
+from Model.Projectiles.ice_pea import IcePea
 
 class Iceshooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Icehooter.png'

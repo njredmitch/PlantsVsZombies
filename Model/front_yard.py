@@ -1,42 +1,25 @@
 import pygame
-from Plants.plant import Plant
-from Zombies.zombie import Zombie
-from Projectiles.projectile import Projectile
-from GameObjects.sun import Sun
-from Model.player import Player
-from plant_shop import PlantShop
 
-from Plants.peashooter import Peashooter as PS
-from Plants.flameshooter import Flameshooter as FS
-from Plants.iceshooter import Iceshooter as IS
-from Plants.green_peashooter import GreenPeashooter as GPS
-from Plants.walnut import Walnut as W
-from Plants.sunflower import Sunflower as S
-
-from Zombies.grunt_zombie import GruntZombie as GZ
-from Zombies.bucket_zombie import BucketZombie as BZ
-from Zombies.cone_zombie import ConeZombie as CZ
-
-from Projectiles.pea import Pea
-from Projectiles.flame_pea import FlamePea as FP
-from Projectiles.ice_pea import IcePea as IP
-from Projectiles.green_pea import GreenPea as GP
+from Model.Plants.plant import Plant
+from Model.Plants.peashooter import Peashooter as PS
+from Model.Zombies.zombie import Zombie
+from Model.Projectiles.projectile import Projectile
+from Model.GameObjects.sun import Sun
+from Model.GameObjects.plant_shop import PlantShop
 
 class FrontYard:
 
-    def __init__(self, group : pygame.sprite.Group) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self._zombies = [[] ] * 5
         self._peashooters = [[]] * 5
+        self._game_sqaures_group = pygame.sprite.Group(self.initialize_game_squares_group())
         self._game_sqaures = self.initialize_game_sqaures()
-        self._game_sqaures_group = self.initialize_game_squares_group()
         self._plants_group = pygame.sprite.Group()
         self._zombie_group = pygame.sprite.Group()
         self._projectile_group = PS.peas
         self._sun_group = pygame.sprite.Group()
-        self._square_group = self.initialize_sqaure_group()
         self._shop_group = pygame.sprite.Group()
-        self._master_group = group
  
     def initialize_game_squares_group(self):
         return [GameSquare(85, 145, 335, 240),
@@ -87,17 +70,10 @@ class FrontYard:
     
     def initialize_game_sqaures(self):
         yard = {}
-        for g in self._game_sqaures_group():
+        for g in self._game_sqaures_group.sprites():
             yard[g]  = None
         
         return yard
-
-    def initialize_sqaure_group(self):
-        t = pygame.sprite.Group
-        for s in self._game_sqaures:
-            t.add(s)
-
-        return t    
     
     def initialize_shop(self):
         self._shop_group = pygame.sprite.Group
@@ -179,7 +155,7 @@ class FrontYard:
         return self._game_sqaures
     
     def get_groups(self):
-        return [self._plants_group, self._zombie_group, self._projectile_group, self._sun_group, self._square_group, self._shop_group]
+        return [self._plants_group, self._zombie_group, self._sun_group, self._projectile_group,  self._square_group, self._shop_group]
     
 class GameSquare(pygame.sprite.Sprite):
 
@@ -192,5 +168,3 @@ class GameSquare(pygame.sprite.Sprite):
     
     def get_pos(self):
         return self._pos
-    
-    

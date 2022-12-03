@@ -1,9 +1,8 @@
-from Plants.peashooter import Peashooter as PS
-from Plants.flameshooter import Flameshooter as FS
-from Plants.iceshooter import Iceshooter as IS
-from Plants.green_peashooter import GreenPeashooter as GS
-from Plants.walnut import Walnut as W
-from Plants.sunflower import Sunflower as S
+from Model.Plants.flame_shooter import Flameshooter as FS
+from Model.Plants.ice_shooter import Iceshooter as IS
+from Model.Plants.green_shooter import GreenPeashooter as GS
+from Model.Plants.walnut import Walnut as W
+from Model.Plants.sunflower import Sunflower as S
 
 class Player:
 
@@ -46,5 +45,3 @@ class Player:
 
     def get_sun(self):
         return self._sun
-    
-

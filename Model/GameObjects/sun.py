@@ -12,7 +12,8 @@ class Sun(pygame.sprite.Sprite):
         self.run_lifespan()
         
     def run_lifespan(self):
-        s = sched.scheduler(25, None, self.fade)
+        s = sched.scheduler(time.time, time.sleep)
+        s.add(25, None, self.fade)
         s.run()
 
     def update_position(self, x, y):

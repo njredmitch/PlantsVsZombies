@@ -1,8 +1,8 @@
 import pygame
 import schedule
 
-from plant import Plant
-from GameObjects.sun import Sun
+from Model.Plants.plant import Plant
+from Model.GameObjects.sun import Sun
 
 
 class Sunflower(Plant, pygame.sprite.Sprite):
@@ -20,9 +20,3 @@ class Sunflower(Plant, pygame.sprite.Sprite):
     
     def run_event(self):
         self._event_scheduler.run_pending()
-    
-    
-
-
-
-

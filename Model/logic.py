@@ -1,36 +1,18 @@
 import pygame
 import random
-from Plants.plant import Plant
-from Zombies.zombie import Zombie
-from Projectiles.projectile import Projectile
-from GameObjects.sun import Sun
-from GameObjects.frontyard import FrontYard
-from player import Player
 
-from Plants.peashooter import Peashooter as PS
-from Plants.flameshooter import Flameshooter as FS
-from Plants.iceshooter import Iceshooter as IS
-from Plants.green_peashooter import GreenPeashooter as GPS
-from Plants.walnut import Walnut as W
-from Plants.sunflower import Sunflower as S
+from Model.Zombies.grunt_zombie import GruntZombie as GZ
+from Model.Zombies.cone_zombie import ConeZombie as CZ
+from Model.Zombies.bucket_zombie import BucketZombie as BZ
 
-from Zombies.grunt_zombie import GruntZombie as GZ
-from Zombies.bucket_zombie import BucketZombie as BZ
-from Zombies.cone_zombie import ConeZombie as CZ
+from Model.front_yard import FrontYard
+from Model.player import Player
 
-from Projectiles.pea import Pea
-from Projectiles.flame_pea import FlamePea as FP
-from Projectiles.ice_pea import IcePea as IP
-from Projectiles.green_pea import GreenPea as GP
-
-#note: update attack zombie method so u get collisions between plants and zombies
-#remove zombie schedule and plant to attack field
-
-class Model:
+class Logic:
     
-    def __init__(self, sprites : pygame.sprite.Group, player : Player) -> None:
-        self._yard = FrontYard(sprites)
-        self._player = player
+    def __init__(self) -> None:
+        self._yard = FrontYard()
+        self._player = Player()
         self._is_end_game = False
         self._zombies_made = 0
     
@@ -255,27 +237,3 @@ class Model:
         self._zombies_made += 15
         
         return [self.produce_zombie((x[i], y[i % 5])) for i in range(15)]
-
-
-        
-
-    
-    
-
-
-            
-    
-
-
-        
-        
-        
-    
-    
-
-
-
-    
-
-
-

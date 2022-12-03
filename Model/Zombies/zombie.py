@@ -1,8 +1,9 @@
 from abc import ABC
 import pygame
+class ZombieMeta(type(ABC), type(pygame.sprite.Sprite)): pass
 
 class Zombie(ABC, pygame.sprite.Sprite):
-
+    __metaclass__ = ZombieMeta
     def __init__(self, health, position, dmg, path) -> None:
         ABC.__init__(self)
         pygame.sprite.Sprite.__init__(self)

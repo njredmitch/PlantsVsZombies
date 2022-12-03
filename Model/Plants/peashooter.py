@@ -2,7 +2,7 @@ import schedule
 import pygame
 
 from abc import ABC, abstractmethod
-from plant import Plant
+from Model.Plants.plant import Plant
 
 class Peashooter(Plant, ABC):
     peas = pygame.sprite.Group  

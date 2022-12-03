@@ -1,5 +1,5 @@
-from peashooter import Peashooter
-from Projectiles.flame_pea import FlamePea
+from Model.Plants.peashooter import Peashooter
+from Model.Projectiles.flame_pea import FlamePea
 
 class Flameshooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Flameshooter.png'

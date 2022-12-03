@@ -1,4 +1,4 @@
-from pea import  Pea
+from Model.Projectiles.pea import  Pea
 
 class FlamePea(Pea):
     image_path = 'PlantsVsZombies\GamePNGS\Flamepea.png'

@@ -1,4 +1,4 @@
-from zombie import Zombie
+from Model.Zombies.zombie import Zombie
 
 class BucketZombie(Zombie):
     image_path = 'PlantsVsZombies\GamePNGS\Buckethead.png'

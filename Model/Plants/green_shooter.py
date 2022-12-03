@@ -1,5 +1,5 @@
-from peashooter import Peashooter
-from Projectiles.green_pea import GreenPea
+from Model.Plants.peashooter import Peashooter
+from Model.Projectiles.green_pea import GreenPea
 
 class GreenPeashooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Peashooter.png'

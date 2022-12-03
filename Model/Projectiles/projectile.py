@@ -1,12 +1,13 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 import pygame
-from pygame.sprite import Sprite
 
-class Projectile(ABC, Sprite):
+class ProjectileMeta(type(ABC), type(pygame.sprite.Sprite)): pass
 
+class Projectile(ABC, pygame.sprite.Sprite):
+    __metaclass__=ProjectileMeta
     def __init__(self, position, dmg, path) -> None:
         ABC.__init__(self)
-        Sprite.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
         self._dmg = dmg
         self._position = position
         self.image = pygame.image.load(path)

@@ -1,5 +1,5 @@
 import pygame
-from plant import Plant
+from Model.Plants.plant import Plant
 
 class Walnut(Plant, pygame.sprite.Sprite):
     image_path = 'PlantsVsZombies\GamePNGS\Walnut.png'
