@@ -13,8 +13,11 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.image = pygame.image.load(path)
         self.rect = self.image.get_rect(midleft = self._position)
     
-    def update_xpos(self):
-        self._position[0] += 1
+    def get_pos(self):
+        return self._position
+
+    def update_xpos(self, x):
+        self._position = (self._position[0] + x, self._position[1])
     
     def update_ypos(self):
         pass
@@ -22,5 +25,8 @@ class Projectile(ABC, pygame.sprite.Sprite):
     def get_dmg(self):
         return self._dmg
     
+    def get_rect(self):
+        return self.rect
+
     def convert_image(self):
         self.image.convert_alpha()
