@@ -12,7 +12,7 @@ class Player:
         self._final_status = None
 
     def store_plant(self, plant):
-        self._plant = self.plant_to_store(plant)
+        self._plant = plant
 
     def spend_sun(self, val):
         self._sun -= val
@@ -20,17 +20,6 @@ class Player:
     def gain_sun(self, val):
         self._sun += val
     
-    def plant_to_store(self, key, pos):
-        if key == 'FP':
-            self._plant = FS(pos)
-        elif key == 'IP':
-            self._plant = IS(pos)
-        elif key == 'GP':
-            self._plant = GS(pos)
-        elif key == 'W':
-            self._plant = W(pos)
-        elif key == 'SF':
-            self._plant = S(pos)
     def has_plant(self):
         return self._plant != None
 
