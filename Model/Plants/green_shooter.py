@@ -1,5 +1,6 @@
 from Model.Plants.peashooter import Peashooter
 from Model.Projectiles.green_pea import GreenPea
+import copy
 
 class GreenPeashooter(Peashooter):
     image_path = 'PlantsVsZombies\GamePNGS\Peashooter.png'
@@ -16,6 +17,8 @@ class GreenPeashooter(Peashooter):
         self.peas.add(GreenPea(self.make_pea_pos()))
 
 
-    def meke_pea_pos(self):
+    def make_pea_pos(self):
         return (self._position[0] + 30, self._position[1] - 75)
-        
+    
+    def deepcopy(self):
+        return GreenPeashooter(copy.copy(self._position))
