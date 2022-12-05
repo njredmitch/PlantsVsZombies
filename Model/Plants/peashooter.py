@@ -5,12 +5,12 @@ from abc import ABC, abstractmethod
 from Model.Plants.plant import Plant
 
 class Peashooter(Plant, ABC):
-    peas = pygame.sprite.Group  
+    peas = pygame.sprite.Group()
 
     def __init__(self, position, path) -> None:
-        super().__init__(200, position, path)
-        self._event_manager = schedule.default_scheduler
-        self._event_manager.every(2).seconds.do(self.shoot())
+        super().__init__(120, position, path)
+        self._event_manager = schedule.Scheduler()
+        self._event_manager.every(2).seconds.do(self.shoot)
         self._primed = False
     
     def shoot_peas(self):
@@ -28,7 +28,8 @@ class Peashooter(Plant, ABC):
     @abstractmethod
     def shoot(self):
         pass
-
+    
+    
 
 
     
