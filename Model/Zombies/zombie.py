@@ -40,8 +40,14 @@ class Zombie(ABC, pygame.sprite.Sprite):
     def get_position(self):
         return self._position
     
+    def get_rect(self):
+        return self.rect
+
+    def update_xrect(self):
+        self.rect.left -= 1
+
     def update_xpos(self, xpos):
-        self._position[0] = xpos
+        self._position = (self._position[0] - xpos, self._position[1])
     
     def update_ypos(self, ypos):
         self._position[1] = ypos
@@ -55,4 +61,6 @@ class Zombie(ABC, pygame.sprite.Sprite):
     def set_slowed_status(self, status):
         self._slowed_status = status
     
+    def __str__(self) -> str:
+        return f'{self._position}'
    
