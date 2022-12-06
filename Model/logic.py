@@ -26,7 +26,6 @@ class Logic:
     def prime_shooters(self): #primes all shooting plants that detect zombies
         for i in range(5):
             if self.yard_row_entered(i) > 0:
-                if i == 4: print(self._yard.get_peashooters()[i])
                 for p in self._yard.get_peashooters()[i]:
                     if not p.is_primed():
                         #print('priming')
@@ -102,9 +101,10 @@ class Logic:
                     self._yard.remove_zombie(z)
 
     def remove_dead_plants(self): # remove dead plants
-        for p in self._yard.get_plants():
-            if p.get_health() <= 0:
-                self._yard.remove_plant(p)
+        for g in self._yard.get_game_sqaures_group():
+            p = self._yard.get_game_squares()[g]
+            if p != None and p.get_health() <= 0:
+                self._yard.remove_plant(p, g)
 
     def check_sun_clicked(self, mouse : tuple[int]): #check if player has clicked on sun
         for s in self._yard.get_sun():
@@ -125,11 +125,11 @@ class Logic:
             
     def buy_plant(self, mouse : tuple[int]): #player buying plant``
         has_clicked, item = self.get_shop_clicked(mouse)
-        if has_clicked and not self.has_player_purchased():
+        if has_clicked and not self.has_player_purchased() and not self._player.has_shovel():
             self._player.spend_sun(item.get_cost())
             plant = item.get_plant().deepcopy()
             self._player.store_plant(plant)
-            self._yard._unplaced.add(plant)
+            self._yard._active.add(plant)
     
     def update_zombie_positions(self):
         for z in self._yard._zombie_group.sprites():
@@ -142,7 +142,7 @@ class Logic:
             p.update_xpos(10)
             p.get_rect().right += 10
 
-    def update_player_plant(self, mouse : tuple[int]): #updating position of player plant
+    def update_plant_pos(self, mouse : tuple[int]): #updating position of player plant
         self._player.get_plant().set_position(mouse)
         self._player.get_plant().get_rect().center = mouse
 
@@ -157,12 +157,32 @@ class Logic:
                 else:
                     p.set_position((pos[0], pos[1] - 15))
                     p.get_rect().midbottom = (pos[0], pos[1] - 15)
-                self._yard.add_plant(p)
+                self._yard.add_plant(p, g)
                 self._player.store_plant(None)
-    
+
+    def update_shovel_pos(self, pos):
+        self._player.get_shovel().update(pos)
+
+    def acquire_shovel(self, pos):
+        if self._yard.get_shovel_group().sprite.rect.collidepoint(pos) and not self.has_player_purchased() and not self._player.has_shovel():
+            shovel = self._yard.get_shovel_group().sprites()[0]
+            self._player.set_shovel(shovel.get_shovel().copy())
+            self._yard._active.add(self._player.get_shovel())
+
+    def use_shovel(self, mouse : tuple[int]):
+        if self._yard.get_shovel_group().sprite.rect.collidepoint(mouse):
+            self._player.get_shovel().kill()
+            self._player.set_shovel(None)
+        for g in self._yard.get_game_squares().keys():
+            p = self._yard.get_game_squares()[g]
+            if g.get_rect().collidepoint(mouse) and p != None:
+                self._yard.remove_plant(p, g)
+                self._player.get_shovel().kill()
+                self._player.set_shovel(None)
+        
     def has_player_purchased(self): #check if player has bought a plant
         return self._player.get_plant() != None
-    
+
     def check_if_lost(self, start : int): #check if player lost
         
         for z in self._yard.get_zombies_group().sprites():
@@ -210,7 +230,6 @@ class Logic:
                 self._yard.add_zombie(self.make_final_z_wave())
 
     def produce_zombie(self, pos : tuple[int]): #creates a zombie based on progression through level
-        print('making zombie')
         i = random.random()
         z = None
         if self._zombies_made < 4:
@@ -254,46 +273,45 @@ class Logic:
         return z
 
     def make_single_zombie(self): #creates a zingle zombie
-        print('making zombie')
         self._zombies_made += 1
         x = 1225
-        y = random.sample([250, 380, 515, 635, 770], 1)[0]
+        y = random.sample([240, 370, 505, 635, 760], 1)[0]
 
-        return self.produce_zombie((x, y - 15))
+        return self.produce_zombie((x, y - 5))
 
     def make_mini_z_wave(self): #makes 2-3 zombies
         z = []
         x = 1225
         if self._zombies_made < 30:
-            y = random.sample([250, 380, 515, 635, 770], 2)
-            z = [self.produce_zombie((x, y[0] - 15)), 
-                 self.produce_zombie((x, y[1] - 15))]
+            y = random.sample([240, 370, 505, 635, 760], 2)
+            z = [self.produce_zombie((x, y[0] - 5)), 
+                 self.produce_zombie((x, y[1] - 5))]
             self._zombies_made +=  2
         else:
-            y = random.sample([250, 380, 515, 635, 770], 3)
-            z  = [self.produce_zombie((x, y[0] - 15)), 
-                    self.produce_zombie((x, y[1] - 15)),
-                    self.produce_zombie((x, y[2] - 15))]
+            y = random.sample([240, 370, 505, 635, 760], 3)
+            z  = [self.produce_zombie((x, y[0] - 5)), 
+                    self.produce_zombie((x, y[1] - 5)),
+                    self.produce_zombie((x, y[2] - 5))]
             self._zombies_made += 3
         return z
 
     def make_small_z_wave(self): #makes 5 zombies at once
         x = random.sample(range(1225, 1260), 5)
-        y = [250, 380, 515, 635, 770]
+        y = [250, 380, 515, 635, 760]
         self._zombies_made += 5
         
-        return [self.produce_zombie((x[i], y[i] - 15)) for i in range(5)]
+        return [self.produce_zombie((x[i], y[i] - 5)) for i in range(5)]
     
     def make_medium_z_wave(self): #makes 10 zombies at once
         x = random.sample(range(1225, 1250), 10)
-        y = [250, 380, 515, 635, 770]
+        y = [240, 370, 505, 635, 760]
         self._zombies_made += 10
         
-        return [self.produce_zombie((x[i], y[i % 5] - 15)) for i in range(10)]
+        return [self.produce_zombie((x[i], y[i % 5] - 5)) for i in range(10)]
     
     def make_final_z_wave(self): #makes 20 zombies at once
-        x = random.sample(range(1225, 1250), 10)
-        y = [250, 380, 515, 635, 770]
+        x = random.sample(range(1225, 1260), 15)
+        y = [240, 370, 505, 635, 760]
         self._zombies_made += 15
         self._is_end_game = True
-        return [self.produce_zombie((x[i], y[i % 5] - 15)) for i in range(15)]
+        return [self.produce_zombie((x[i], y[i % 5] - 5)) for i in range(15)]
