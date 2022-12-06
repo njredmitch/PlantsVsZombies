@@ -7,8 +7,9 @@ from Model.Plants.sunflower import Sunflower as S
 class Player:
 
     def __init__(self) -> None:
-        self._sun = 50
+        self._sun = 500
         self._plant = None
+        self._shovel = None
         self._final_status = None
 
     def store_plant(self, plant):
@@ -23,6 +24,12 @@ class Player:
     def has_plant(self):
         return self._plant != None
 
+    def has_shovel(self):
+        return self._shovel != None
+
+    def set_shovel(self, sh):
+        self._shovel = sh
+
     def set_final_status(self, fin):
         self._final_status = fin
 
@@ -31,6 +38,9 @@ class Player:
 
     def get_plant(self):
         return self._plant
+
+    def get_shovel(self):
+        return self._shovel
 
     def get_sun(self):
         return self._sun
