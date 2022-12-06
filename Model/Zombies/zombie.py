@@ -1,5 +1,7 @@
 from abc import ABC
 import pygame
+import schedule
+
 class ZombieMeta(type(ABC), type(pygame.sprite.Sprite)): pass
 
 class Zombie(ABC, pygame.sprite.Sprite):
@@ -13,14 +15,15 @@ class Zombie(ABC, pygame.sprite.Sprite):
         self._life_state = True
         self._slowed_status = False
         self._movement_status = True
+        self.slowed_timer = schedule.Scheduler()
         self.image = pygame.image.load(path)
         self.rect = self.image.get_rect(midbottom = self._position)
         
     def lose_health(self, dmg):
         self._health -= dmg
 
-    def convert_image(self):
-        self.image.convert_alpha()
+    def run_task(self):
+        self.slowed_timer.run_pending()
 
     def get_health(self):
         return self._health
@@ -43,8 +46,18 @@ class Zombie(ABC, pygame.sprite.Sprite):
     def get_rect(self):
         return self.rect
 
-    def update_xrect(self):
-        self.rect.left -= 1
+    def update_scheduler(self):
+        self.slowed_timer.clear()
+        self.slowed_timer.every(20).seconds.do(self.thaw)
+    
+    def thaw(self):
+        self._slowed_status = False
+
+    def freeze(self):
+        self._slowed_status = True
+
+    def update_xrect(self, x):
+        self.rect.left -= x
 
     def update_xpos(self, xpos):
         self._position = (self._position[0] - xpos, self._position[1])
@@ -61,10 +74,7 @@ class Zombie(ABC, pygame.sprite.Sprite):
     
     def set_movement_status(self, status):
         self._movement_status = status
-    
-    def set_slowed_status(self, status):
-        self._slowed_status = status
-    
+
     def __str__(self) -> str:
         return f'{self._position}'
    

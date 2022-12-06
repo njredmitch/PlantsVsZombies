@@ -7,7 +7,7 @@ from Model.Plants.sunflower import Sunflower as S
 class Player:
 
     def __init__(self) -> None:
-        self._sun = 50
+        self._sun = 500
         self._plant = None
         self._shovel = None
         self._final_status = None

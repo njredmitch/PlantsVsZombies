@@ -3,6 +3,9 @@ import random
 
 from Model.Plants.sunflower import Sunflower as SF
 from Model.Plants.walnut import Walnut as W
+
+from Model.Projectiles.ice_pea import IcePea as IP
+
 from Model.Zombies.grunt_zombie import GruntZombie as GZ
 from Model.Zombies.cone_zombie import ConeZombie as CZ
 from Model.Zombies.bucket_zombie import BucketZombie as BZ
@@ -54,11 +57,18 @@ class Logic:
         for s in self._yard.get_sunflowers():
             s.run_event()
 
+    def thaw_zombies(self):
+        for z in list(filter(lambda z: z.get_slowed_status(), self._yard.get_zombies_group().sprites())):
+            z.run_task()
+
     def damage_zombies(self): #make projectiles damage zombies
         collisions = pygame.sprite.groupcollide(self._yard.get_zombies_group(), self._yard.get_projectiles(), False, True)
         peas = []
         for z in collisions.keys():
             for p in collisions[z]:
+                if isinstance(p, IP) and not z.get_slowed_status():
+                    z.freeze()
+                    z.update_scheduler()
                 z.lose_health(p.get_dmg())
                 self.update_zombie_conditions(z)
                 peas.append(p)
@@ -158,10 +168,18 @@ class Logic:
             self._yard._active.add(plant)
     
     def update_zombie_positions(self):
-        for z in self._yard._zombie_group.sprites():
+        zombies = list(filter(lambda z: not z.get_slowed_status(), self._yard._zombie_group.sprites()))
+        for z in zombies:
             if z.get_movement_status() == True:
                 z.update_xpos(1)
-                z.update_xrect()
+                z.update_xrect(1)
+    
+    def update_slow_zombie_positions(self):
+        zombies = list(filter(lambda z: z.get_slowed_status(), self._yard._zombie_group.sprites()))
+        for z in zombies:
+            if z.get_movement_status() == True:
+                z.update_xpos(1)
+                z.update_xrect(1)
 
     def update_projectile_positions(self):
         for p in self._yard.get_projectiles().sprites():
@@ -222,7 +240,7 @@ class Logic:
     def check_if_lost(self, start : int): #check if player lost
         
         for z in self._yard.get_zombies_group().sprites():
-            if z.get_position()[0] < start:
+            if z.get_rect().midright[0] < start:
                 self._player.set_final_status(False)
                 return True
         return False
