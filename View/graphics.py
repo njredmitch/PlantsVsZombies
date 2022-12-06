@@ -11,22 +11,21 @@ class Graphics:
         self._yard = yard
         self._player = player
 
-    def draw_graphics(self, screen : pygame.display, made):
+    def draw_graphics(self, screen : pygame.display):
         background = pygame.image.load('PlantsVsZombies\GamePNGS\FrontyardFull.png')
-        player_surf = self._sun_font.render(f'SUN: {self._player.get_sun()}', True, 'Black')
-        made_surf = self._sun_font.render(f'Made: {made}',  True, 'Black')
-
-        screen.blit(background, (0,0))
-        screen.blit(player_surf, (560,20))
-        screen.blit(made_surf, (700,20))
+        sun_count = self._sun_font.render(f'SUN: {self._player.get_sun()}', True, 'Black')
         
+        screen.blit(background, (0,0))
+        screen.blit(sun_count, (560,20))
+        
+        self._yard.get_shovel_group().draw(screen)
         self._yard.get_plants().draw(screen)
         self._yard.get_zombies_group().draw(screen)
         self._yard.get_projectiles().draw(screen)
         self._yard.get_sun().draw(screen)
         self._yard.get_game_sqaures_group().draw(screen)
         self._yard._shop_group.draw(screen)
-        self._yard._unplaced.draw(screen)
+        self._yard._active.draw(screen)
 
         if self._player.get_final_status() != None:
             if not self._player.get_final_status():
