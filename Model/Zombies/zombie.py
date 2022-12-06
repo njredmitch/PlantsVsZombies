@@ -52,6 +52,10 @@ class Zombie(ABC, pygame.sprite.Sprite):
     def update_ypos(self, ypos):
         self._position[1] = ypos
     
+    def update_image(self, path):
+        self.image = pygame.image.load(path)
+        self.rect = self.image.get_rect(midbottom=self._position)
+        
     def set_life_state(self, state):
         self._life_state = state
     
