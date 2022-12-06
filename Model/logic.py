@@ -2,6 +2,7 @@ import pygame
 import random
 
 from Model.Plants.sunflower import Sunflower as SF
+from Model.Plants.walnut import Walnut as W
 from Model.Zombies.grunt_zombie import GruntZombie as GZ
 from Model.Zombies.cone_zombie import ConeZombie as CZ
 from Model.Zombies.bucket_zombie import BucketZombie as BZ
@@ -59,6 +60,7 @@ class Logic:
         for z in collisions.keys():
             for p in collisions[z]:
                 z.lose_health(p.get_dmg())
+                self.update_zombie_conditions(z)
                 peas.append(p)
         
         for p in peas:
@@ -71,19 +73,43 @@ class Logic:
     def stop_zombies_walk(self):
         for z in self._yard.get_zombies_group().sprites():
             for p in self._yard.get_plants().sprites():
-                if p.get_rect().collidepoint(z.get_rect().center):
+                if p.get_rect().collidepoint(z.get_rect().center) and z.get_movement_status() == True:
                     z.set_movement_status(False)
     
     def start_zombies_walk(self):
         for z in self._yard.get_zombies_group().sprites():
-            if len(pygame.sprite.spritecollide(z, self._yard.get_plants(), False)) == 0:
+            if len(pygame.sprite.spritecollide(z, self._yard.get_plants(), False)) == 0 and z.get_movement_status() == False:
                 z.set_movement_status(True)
+            else:
+                plants = pygame.sprite.spritecollide(z, self._yard.get_plants(), False)
+                pairs = self.make_plant_zombie_pairs(z, plants)
+                if  len(list(filter(self.is_same_row, pairs))) == 0 and z.get_movement_status() == False:
+        
+                        z.set_movement_status(True)
+
+    def is_same_row(self, pair):
+        z = pair[0]
+        p = pair[1]
+        return p.get_position()[1]//145 - 1 == z.get_position()[1]//150 - 1
+
+    def make_plant_zombie_pairs(self, z, plants):
+        return list(map(lambda p: (z, p), plants))
 
     def make_zombies_attack(self): #attacking plants
          for p in self._yard.get_plants().sprites():
             for z in self._yard.get_zombies_group().sprites():
                 if p.get_rect().collidepoint(z.get_rect().midleft):
-                    p.lose_health(z.get_attack_dmg())
+                    if isinstance(p, W):
+                        if p.get_health() > 720:
+                            p.set_image('PlantsVsZombies\GamePNGS\Walnut_Frame.png')
+                            p.lose_health(z.get_attack_dmg())
+                            p.set_image('PlantsVsZombies\GamePNGS\Walnut.png')
+                        else:
+                            p.set_image('PlantsVsZombies\GamePNGS\Injured_Walnut_Frame.png')
+                            p.lose_health(z.get_attack_dmg())
+                            p.set_image('PlantsVsZombies\GamePNGS\Injured_Walnut.png')
+                    else:
+                         p.lose_health(z.get_attack_dmg())
 
     def remove_projectiles(self, end : int): #removing projectiles passed game border
         to_remove = []
@@ -145,6 +171,16 @@ class Logic:
     def update_plant_pos(self, mouse : tuple[int]): #updating position of player plant
         self._player.get_plant().set_position(mouse)
         self._player.get_plant().get_rect().center = mouse
+
+    def update_zombie_conditions(self, z):
+        if z.get_health() == 40:
+            z.update_image('PlantsVsZombies\GamePNGS\Injured_Zombie.png')
+        elif (isinstance(z, CZ) or isinstance(z, BZ)) and z.get_health() == 120:
+            z.update_image('PlantsVsZombies\GamePNGS\Zombie.png')
+        elif isinstance(z, CZ) and z.get_health() == 320:
+            z.update_image('PlantsVsZombies\GamePNGS\Injured_Conehead.png')
+        elif isinstance(z, BZ) and z.get_health() == 700:
+            z.update_image('PlantsVsZombies\GamePNGS\Injured_Buckethead.png')
 
     def place_plant(self, mouse : tuple[int]): #placing plant
         for g in self._yard.get_game_squares().keys():
