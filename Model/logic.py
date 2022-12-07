@@ -19,7 +19,7 @@ class Logic:
         self._yard = FrontYard()
         self._player = Player()
         self._is_end_game = False
-        self._zombies_made = 0
+        self._zombies_made = 30
     
     def yard_row_entered(self, i):
         for z in self._yard.get_zombies()[i]:
@@ -60,6 +60,17 @@ class Logic:
     def thaw_zombies(self):
         for z in list(filter(lambda z: z.get_slowed_status(), self._yard.get_zombies_group().sprites())):
             z.run_task()
+
+    def unlock_shops(self):
+        if self._zombies_made == 12:
+            self._yard.get_shop_group().sprites()[3].open()
+        elif self._zombies_made == 40:
+            self._yard.get_shop_group().sprites()[4].open()
+
+    def open_shops(self):
+        for shop in self._yard.get_shop_group().sprites():
+            if not shop.is_open():
+                shop.run_event()
 
     def damage_zombies(self): #make projectiles damage zombies
         collisions = pygame.sprite.groupcollide(self._yard.get_zombies_group(), self._yard.get_projectiles(), False, True)
@@ -153,7 +164,7 @@ class Logic:
         self._player.gain_sun(25)
 
     def get_shop_clicked(self, mouse):
-        for p in self._yard._shop_group:
+        for p in self._yard.get_shop_group().sprites():
             if (p.get_rect().collidepoint(mouse) and self._player.get_sun() >= p.get_cost() 
                 and not self._player.has_plant()):
                 return True, p
@@ -161,11 +172,12 @@ class Logic:
             
     def buy_plant(self, mouse : tuple[int]): #player buying plant``
         has_clicked, item = self.get_shop_clicked(mouse)
-        if has_clicked and not self.has_player_purchased() and not self._player.has_shovel():
+        if has_clicked and not self.has_player_purchased() and not self._player.has_shovel() and item.is_open():
             self._player.spend_sun(item.get_cost())
             plant = item.get_plant().deepcopy()
             self._player.store_plant(plant)
             self._yard._active.add(plant)
+            item.close()
     
     def update_zombie_positions(self):
         zombies = list(filter(lambda z: not z.get_slowed_status(), self._yard._zombie_group.sprites()))

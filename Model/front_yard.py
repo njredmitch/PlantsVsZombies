@@ -86,11 +86,16 @@ class FrontYard:
         return yard
     
     def initialize_shop(self):
-        shop = [PlantShop('PlantsVsZombies\GamePNGS\Sunflower_Shop.png', (0, 30), 50, S((0, 30))),
-                PlantShop('PlantsVsZombies\GamePNGS\Walnut_Shop.png', (0, 90), 50, W((0, 90))),
-                PlantShop('PlantsVsZombies\GamePNGS\Peashooter_Shop.png', (0, 150), 100, GS((0, 150))),
-                PlantShop('PlantsVsZombies\GamePNGS\Iceshooter_Shop.png', (0, 210), 175, IS((0, 210))),
-                PlantShop('PlantsVsZombies\GamePNGS\Flameshooter_Shop.png', (0, 270), 200, FS((0, 270)))]
+        shop = [PlantShop('PlantsVsZombies\GamePNGS\Sunflower_Shop.png',
+                          'PlantsVsZombies\GamePNGS\Sunflower_Closed_Shop.png',(0, 30), 50, S((0, 30)), 8, True),
+                PlantShop('PlantsVsZombies\GamePNGS\Walnut_Shop.png', 
+                          'PlantsVsZombies\GamePNGS\Walnut_Closed_Shop.png', (0, 90), 50, W((0, 90)), 15, True),
+                PlantShop('PlantsVsZombies\GamePNGS\Peashooter_Shop.png', 
+                          'PlantsVsZombies\GamePNGS\Peashooter_Closed_Shop.png', (0, 150), 100, GS((0, 150)), 8, True),
+                PlantShop('PlantsVsZombies\GamePNGS\Iceshooter_Shop.png', 
+                          'PlantsVsZombies\GamePNGS\Iceshooter_Closed_Shop.png', (0, 210), 175, IS((0, 210)), 8, False),
+                PlantShop('PlantsVsZombies\GamePNGS\Flameshooter_Shop.png', 
+                          'PlantsVsZombies\GamePNGS\Flameshooter_Closed_Shop.png', (0, 270), 200, FS((0, 270)), 8, False)]
         return shop
     
     def any_zombies_left(self):
@@ -173,6 +178,9 @@ class FrontYard:
 
     def get_game_sqaures_group(self):
         return self._game_sqaures_group
+
+    def get_shop_group(self):
+        return self._shop_group
 
     def get_shovel_group(self):
         return self._shovel_group

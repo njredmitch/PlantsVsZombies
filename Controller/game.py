@@ -74,6 +74,8 @@ class Game:
             clock.tick(FPS)
 
     def _run_tasks(self, loops):
+        self._logic.unlock_shops()
+        self._logic.open_shops()
         self._logic.make_sunlight()
         self._logic.remove_projectiles(1185) #removing objects
         self._logic.remove_dead_plants()
