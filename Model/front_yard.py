@@ -15,7 +15,8 @@ from Model.GameObjects.plant_shop import PlantShop
 from Model.GameObjects.shovel import ShovelBlock as SB
 
 class FrontYard:
-
+    """Represents the front yard of a house, stores all game objects
+    """
     def __init__(self) -> None:
         super().__init__()
         self._zombies = [[], [], [], [], []]
@@ -32,6 +33,11 @@ class FrontYard:
         self._active = pygame.sprite.GroupSingle()
 
     def initialize_game_squares_group(self):
+        """initializes all of the games sqaure sprites to be added to a group
+
+        Returns:
+            list[GameSquare]: the gamesqaures to be added to the group
+        """
         return [GameSquare(85, 145, 335, 240),
                               GameSquare(85, 145, 425, 240),
                               GameSquare(95, 145, 520, 240),
@@ -79,6 +85,12 @@ class FrontYard:
                               GameSquare(105, 145, 1065, 760)]
     
     def initialize_game_sqaures(self):
+        """creates a dict[Gamesqaure : Plant] to pair each 
+        plant with the gamesqaure it is placed on
+
+        Returns:
+            dict[Gamesqaure : Plant]: the gamesqaures paired with no plants
+        """
         yard = {}
         for g in self._game_sqaures_group.sprites():
             yard[g]  = None
@@ -86,6 +98,11 @@ class FrontYard:
         return yard
     
     def initialize_shop(self):
+        """initializes the plant shops
+
+        Returns:
+            list[PlantShop]: the plant shops to be stored
+        """
         shop = [PlantShop('PlantsVsZombies\GamePNGS\Sunflower_Shop.png',
                           'PlantsVsZombies\GamePNGS\Sunflower_Closed_Shop.png',(0, 30), 50, S((0, 30)), 8, True),
                 PlantShop('PlantsVsZombies\GamePNGS\Walnut_Shop.png', 
@@ -99,12 +116,24 @@ class FrontYard:
         return shop
     
     def any_zombies_left(self):
+        """checks if any zombies are left in the yard
+
+        Returns:
+            Boolean: True zombies are in the yard, false otherwise
+        """
         for row in self._zombies:
             if len(row) > 0:
                 return True
         return False
         
     def add_plant(self, plant : Plant, square):
+        """adds a plant to the yard, adding each plant 
+        to the necessary containers
+
+        Args:
+            plant (Plant): the plant to be added
+            square (GameSquare): the game sqaure to pair with the plant
+        """
         if isinstance(plant, PS):
             self._plants_group.add(plant)
             self._peashooters[self.get_peashooter_row(plant)].append(plant)
@@ -117,6 +146,12 @@ class FrontYard:
         self._active.remove(plant)
 
     def add_zombie(self, z : Zombie):
+        """add(s) zombie(s) to the yard, adding a 
+        zombie to the necessary containers
+
+        Args:
+            z (Zombie/list[Zombie]): The zombie(s) to be added to the yard
+        """
         if isinstance(z, list):
             for z in z:
                 self._zombies[self.get_zombie_row(z)].append(z)
@@ -126,9 +161,20 @@ class FrontYard:
             self._zombie_group.add(z)
 
     def add_sun(self, s : Sun):
+        """adds a sun object to the yard
+
+        Args:
+            s (Sun): the sun object to be added
+        """
         self._sun_group.add(s)
 
     def remove_plant(self, plant : Plant, square):
+        """removes a plant from the yard
+
+        Args:
+            plant (Plant): the plant to remove
+            square (_type_): the game sqaure paired with the plant
+        """
         if isinstance(plant, PS):
             self._peashooters[self.get_peashooter_row(plant)].remove(plant)
         if isinstance(plant, S):
@@ -137,56 +183,143 @@ class FrontYard:
         plant.kill()
         
     def remove_zombie(self, z : Zombie):
+        """removes a zombie from the yard
+
+        Args:
+            z (Zombie): the zombie to remove
+        """
         self._zombies[self.get_zombie_row(z)].remove(z)
         z.kill()
     
     def remove_projectile(self, p : Projectile):
+        """removes a projectile from the yard
+
+        Args:
+            p (Projectile): the projectile to remove
+        """
         self._projectile_group.remove(p)
     
     def remove_sun(self, s : Sun):
+        """removes sun from the yard
+
+        Args:
+            s (Sun): the sun to remove
+        """
         s.kill()
 
     def get_peashooter_row(self, ps : PS):
+        """finds the row a peashooter should be placed/is in
+
+        Args:
+            ps (PS): the peashooter to check
+
+        Returns:
+            int: the row the peashooter is in
+        """
         return ps.get_position()[1]//145 - 1
     
     def get_zombie_row(self, z : Zombie):
+        """finds the row the zombie is/should be located at
+
+        Args:
+            z (Zombie): the zombie to check
+
+        Returns:
+            int: the row
+        """
         return z.get_position()[1]//150 - 1
 
     def get_plants(self):
+        """returns all the plants currently in the yard
+
+        Returns:
+            Group: the Group container storing all the plants
+        """
         return self._plants_group
     
     def get_zombies(self):
+        """returns the zombies in the yard
+
+        Returns:
+            List[List[Zombie]]: the matrix storing the zombies
+        """
         return self._zombies
     
     def get_zombies_group(self):
+        """returns the zombies in the yard
+
+        Returns:
+            Group: the Group container storing all the zombies
+        """
         return self._zombie_group
     
     def get_projectiles(self):
+        """returns all the projectiles in the yard
+
+        Returns:
+            Group: the group storing all the projectiles
+        """
         return self._projectile_group
     
     def get_peashooters(self):
+        """returns all the peashooters in the yard
+
+        Returns:
+            List[List[Peashooters]]: the matrix storing peashooters
+        """
         return self._peashooters
     
     def get_sunflowers(self):
+        """returns all the sunflowers in the yard
+
+        Returns:
+            list[Sunflower]: the list storing the sunflowers
+        """
         return self._sunflowers
 
     def get_sun(self):
+        """returns the sun currently in the yard
+
+        Returns:
+            Group: the group storing all of the sun objects
+        """
         return self._sun_group
     
     def get_game_squares(self):
+        """returns all of the gamesqaure, plant pairs of the yard
+
+        Returns:
+            Dict[Gameqaure : Plant]: the gamesqaure plant pairs of the yard
+        """
         return self._game_sqaures
 
     def get_game_sqaures_group(self):
+        """returns all of the game sqaure objects in the yard
+
+        Returns:
+            Group: the gamesqaure objects located in the yard
+        """
         return self._game_sqaures_group
 
     def get_shop_group(self):
+        """returns all of the plant shops 
+
+        Returns:
+            Group: the group storing the plant shops
+        """
         return self._shop_group
 
     def get_shovel_group(self):
+        """returns the shovel block the player can get the shovel from
+
+        Returns:
+            _type_: _description_
+        """
         return self._shovel_group
     
 class GameSquare(pygame.sprite.Sprite):
-
+    """Represents a single sqaure found in the yard
+    """
     def __init__(self, width, height, x, y) -> None:
         super().__init__()
         self._pos = (x, y)
@@ -195,7 +328,17 @@ class GameSquare(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(midbottom=self._pos)
     
     def get_rect(self):
+        """gets the rectangle of the GameSquare
+
+        Returns:
+            Rectangle: the rectangle of the Gamesqaure
+        """
         return self.rect
 
     def get_pos(self):
+        """Gets the position of the game square
+
+        Returns:
+            tuple(int): the x,y position of the game sqaure
+        """
         return self._pos

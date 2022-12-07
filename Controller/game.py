@@ -6,12 +6,21 @@ from Model.logic import Logic
 from View.graphics import Graphics
 
 class Game:
-
+    """Represents the controller running the game
+    """
     def __init__(self, logic : Logic, graphics : Graphics) -> None:
+        """initializes the controller
+
+        Args:
+            logic (Logic): the logic handeling the game
+            graphics (Graphics): the graphics of the game
+        """
         self._logic = logic
         self._graphics = graphics
     
     def run_game(self):
+        """starts the game and runs it
+        """
         pygame.init()
         screen = pygame.display.set_mode((1165,800))
         clock = pygame.time.Clock()
@@ -52,17 +61,13 @@ class Game:
                     scheduler.clear()
                     scheduler.every(15).seconds.do(self._logic.zombies_enter_yard)
                 
-                if loops % 30 == 0:
-                    self._logic.make_zombies_attack() #attacking plants
-                
-                if loops % 5 == 0:
-                    self._logic.update_zombie_positions() 
-                
                 
                 scheduler.run_pending() 
                 sun_scheduler.run_pending()
                 self._run_tasks(loops)
+
                 self._graphics.draw_graphics(screen)
+
             else:
                 for event in events:
                     if event.type == pygame.QUIT:
@@ -74,6 +79,11 @@ class Game:
             clock.tick(FPS)
 
     def _run_tasks(self, loops):
+        """runs tasks to be called every iteration in the main loop
+
+        Args:
+            loops (int): how many loops have been run
+        """
         self._logic.unlock_shops()
         self._logic.open_shops()
         self._logic.make_sunlight()
@@ -87,6 +97,10 @@ class Game:
         self._logic.thaw_zombies()
         if loops % 30 == 0:
             self._logic.update_slow_zombie_positions()
+        if loops % 30 == 0:
+                    self._logic.make_zombies_attack() #attacking plants
+        if loops % 5 == 0:
+            self._logic.update_zombie_positions()     
         self._logic.update_projectile_positions()
 
 

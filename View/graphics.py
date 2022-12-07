@@ -3,8 +3,15 @@ from Model.player import Player
 from Model.front_yard import FrontYard
 
 class Graphics:
-
+    """represents the Graphics of the game
+    """
     def __init__(self, yard :FrontYard, player : Player):
+        """initializes the graphics
+
+        Args:
+            yard (FrontYard): the yard of the house
+            player (Player): the player
+        """
         pygame.init()
         self._font = pygame.font.Font(None, 60)
         self._sun_font = pygame.font.Font(None, 30)
@@ -12,12 +19,20 @@ class Graphics:
         self._player = player
 
     def draw_graphics(self, screen : pygame.display):
+        """draws all of the objects onto the given screen
+
+        Args:
+            screen (pygame.display): the screen on which to draw
+        """
+        pygame.init()
         background = pygame.image.load('PlantsVsZombies\GamePNGS\FrontyardFull.png')
         sun_count = self._sun_font.render(f'SUN: {self._player.get_sun()}', True, 'Black')
-        
+        sun_count_background = pygame.Surface((78, 18))
+        sun_count_background.fill('White')
         screen.blit(background, (0,0))
+        screen.blit(sun_count_background, (560,20))
         screen.blit(sun_count, (560,20))
-        
+
         self._yard.get_shovel_group().draw(screen)
         self._yard.get_plants().draw(screen)
         self._yard.get_zombies_group().draw(screen)
