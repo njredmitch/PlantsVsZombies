@@ -20,8 +20,8 @@ class Game:
         faster = False
         scheduler = schedule.Scheduler()
         sun_scheduler = schedule.Scheduler()
-        scheduler.every(15).seconds.do(self._logic.zombies_enter_yard)
-        sun_scheduler.every(15).seconds.do(self._logic.give_player_sun)
+        scheduler.every(30).seconds.do(self._logic.zombies_enter_yard)
+        sun_scheduler.every(20).seconds.do(self._logic.give_player_sun)
 
         while True:
             events = pygame.event.get()
