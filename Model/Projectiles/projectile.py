@@ -30,7 +30,7 @@ class Projectile(ABC, pygame.sprite.Sprite):
         """
         return self._position
 
-    def update_xpos(self, x):
+    def update_xpos(self, x : int):
         """increases the x position
 
         Args:
