@@ -60,9 +60,9 @@ class Logic:
         calling the prime/unprime shooter methods
         """
         self.prime_shooters()
-        self.unprime_peashooters()
+        self.unprime_shooters()
 
-    def unprime_peashooters(self): #unprime any shooting plants that dont detect zombies 
+    def unprime_shooters(self): #unprime any shooting plants that dont detect zombies 
         """this method unprimes any primed shooters 
         if no zombies are detected in their row
         """
