@@ -27,8 +27,9 @@ class Graphics:
         pygame.init()
         background = pygame.image.load('PlantsVsZombies\GamePNGS\FrontyardFull.png')
         sun_count = self._sun_font.render(f'SUN: {self._player.get_sun()}', True, 'Black')
-        sun_count_background = pygame.Surface((78, 18))
+        sun_count_background = pygame.Surface((sun_count.get_width(), sun_count.get_height()))
         sun_count_background.fill('White')
+
         screen.blit(background, (0,0))
         screen.blit(sun_count_background, (560,20))
         screen.blit(sun_count, (560,20))
