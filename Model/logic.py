@@ -334,8 +334,8 @@ class Logic:
                 p = self._player.get_plant()
                 pos = g.get_pos()
                 if isinstance(p, SF):
-                    p.set_position((pos[0], pos[1] - 25))
-                    p.get_rect().midbottom = (pos[0], pos[1] - 25)
+                    p.set_position((pos[0], pos[1] - 30))
+                    p.get_rect().midbottom = (pos[0], pos[1] - 30)
                 else:
                     p.set_position((pos[0], pos[1] - 15))
                     p.get_rect().midbottom = (pos[0], pos[1] - 15)
