@@ -10,7 +10,7 @@ class Player:
     def __init__(self) -> None:
         """intializes the player
         """
-        self._sun = 50
+        self._sun_bank = 50
         self._plant = None
         self._shovel = None
         self._final_status = None
@@ -29,7 +29,7 @@ class Player:
         Args:
             val (int): the sun spent
         """
-        self._sun -= val
+        self._sun_bank -= val
     
     def gain_sun(self, val):
         """the sun to add the the players sun bank
@@ -37,7 +37,7 @@ class Player:
         Args:
             val (int): the sun gained
         """
-        self._sun += val
+        self._sun_bank += val
     
     def has_plant(self):
         """checks if the player has a plant in their plant inventory
@@ -101,4 +101,4 @@ class Player:
         Returns:
             int: the amount of sun
         """
-        return self._sun
+        return self._sun_bank
