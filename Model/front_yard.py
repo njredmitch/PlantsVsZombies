@@ -321,6 +321,7 @@ class GameSquare(pygame.sprite.Sprite):
     """Represents a single sqaure found in the yard
     """
     def __init__(self, width, height, x, y) -> None:
+
         super().__init__()
         self._pos = (x, y)
         self.image = pygame.Surface((width,height))
