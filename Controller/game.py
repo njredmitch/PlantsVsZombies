@@ -79,7 +79,7 @@ class Game:
             clock.tick(FPS)
 
     def _run_tasks(self, loops):
-        """runs tasks to be called every iteration in the main loop
+        """runs majority of the tasks called by logic class
 
         Args:
             loops (int): how many loops have been run
